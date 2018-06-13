@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 
 import logo from 'assets/logo.svg';
 import { tokenLogin } from 'actions';
+import { LOADING } from 'constants/misc';
+import { token as tokenPropTypes } from 'constants/propTypes';
 
 const StyleWrapper = styled.div`
   height: 100vh;
@@ -22,6 +24,10 @@ const StyleWrapper = styled.div`
 `;
 
 class LoginPage extends React.Component {
+  static propsType = {
+    token: tokenPropTypes.isRequired,
+  };
+
   state = {
     username: '',
     password: '',
@@ -47,7 +53,11 @@ class LoginPage extends React.Component {
             <Header as="h2" color="yellow" textAlign="center">
               <Image src={logo} /> Log-in to your account
             </Header>
-            <Form size="large" onSubmit={this.handleSubmit}>
+            <Form
+              size="large"
+              onSubmit={this.handleSubmit}
+              loading={this.props.token.status === LOADING}
+            >
               <Segment stacked>
                 <Form.Input
                   fluid
