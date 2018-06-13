@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-export default combineReducers({ routerReducer });
+import token from './token';
+
+export default combineReducers({ routerReducer, token });
