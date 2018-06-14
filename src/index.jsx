@@ -8,6 +8,7 @@ import 'semantic-ui-css/semantic.min.css';
 import store, { history } from 'store';
 import { PrivateRoute, PublicRoute } from 'components/Routes';
 import Layout from 'components/Layout';
+import { AdminLayout, UserLayout } from 'components/AuthenticatedLayouts';
 import LoginPage from 'containers/LoginPage';
 import AdminHomePage from 'containers/AdminHomePage';
 import HomePage from 'containers/HomePage';
@@ -22,17 +23,21 @@ const router = (
             admin
             path="/admin"
             render={() => (
-              <Switch>
-                <Route path="/" component={AdminHomePage} />
-              </Switch>
+              <AdminLayout>
+                <Switch>
+                  <Route path="/" component={AdminHomePage} />
+                </Switch>
+              </AdminLayout>
             )}
           />
           <PrivateRoute
             path="/"
             render={() => (
-              <Switch>
-                <Route path="/" component={HomePage} />
-              </Switch>
+              <UserLayout>
+                <Switch>
+                  <Route path="/" component={HomePage} />
+                </Switch>
+              </UserLayout>
             )}
           />
         </Switch>

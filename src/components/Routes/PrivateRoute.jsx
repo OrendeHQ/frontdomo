@@ -36,9 +36,7 @@ const PrivateRoute = ({
           return successfulRender;
         } else {
           return (
-            <Redirect
-              to={{ pathname: '/user', state: { from: props.location } }}
-            />
+            <Redirect to={{ pathname: '/', state: { from: props.location } }} />
           );
         }
       } else {
