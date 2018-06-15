@@ -12,6 +12,7 @@ import { AdminLayout, UserLayout } from 'components/AuthenticatedLayouts';
 import LoginPage from 'containers/LoginPage';
 import AdminHomePage from 'containers/AdminHomePage';
 import HomePage from 'containers/HomePage';
+import PartnersPage from 'containers/PartnersPage';
 
 const router = (
   <Provider store={store}>
@@ -25,7 +26,12 @@ const router = (
             render={() => (
               <AdminLayout>
                 <Switch>
-                  <Route path="/" component={AdminHomePage} />
+                  <Route
+                    exact
+                    path="/admin/partners"
+                    component={PartnersPage}
+                  />
+                  <Route exact path="/admin" component={AdminHomePage} />
                 </Switch>
               </AdminLayout>
             )}
@@ -35,7 +41,7 @@ const router = (
             render={() => (
               <UserLayout>
                 <Switch>
-                  <Route path="/" component={HomePage} />
+                  <Route exact path="/" component={HomePage} />
                 </Switch>
               </UserLayout>
             )}
