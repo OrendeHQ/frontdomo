@@ -8,3 +8,12 @@ export const storedToken = (() => {
 
   return isTokenValid ? storedToken : null;
 })();
+
+export async function withAuth(actionProm, dispatchFunc) {
+  try {
+    return await actionProm;
+  } catch (e) {
+    if (e.status === 401) return await dispatchFunc();
+    throw e;
+  }
+}

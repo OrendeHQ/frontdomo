@@ -1,26 +1,42 @@
 import React from 'react';
-import { Table, Button, Icon } from 'semantic-ui-react';
+import { Table, Button, Icon, Loader, Dimmer } from 'semantic-ui-react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import TableRow from './components/TableRow';
 
 const StyledTable = styled(Table)``;
 
 export default class DodoTable extends React.Component {
+  static propTypes = {
+    fields: PropTypes.arrayOf(PropTypes.string).isRequired,
+    headers: PropTypes.object.isRequired,
+    rows: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired,
+  };
+
   render() {
     return (
       <StyledTable compact celled>
+        <Dimmer active={this.props.loading} inverted>
+          <Loader />
+        </Dimmer>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Registration Date</Table.HeaderCell>
-            <Table.HeaderCell>E-mail address</Table.HeaderCell>
-            <Table.HeaderCell>Premium Plan</Table.HeaderCell>
-            <Table.HeaderCell>Action</Table.HeaderCell>
+            {this.props.fields.map((v, i) => (
+              <Table.HeaderCell key={i}>
+                {this.props.headers[v]}
+              </Table.HeaderCell>
+            ))}
+            <Table.HeaderCell>Actions</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
-        <Table.Body>{[1, 2, 3].map(i => <TableRow key={i} />)}</Table.Body>
+        <Table.Body>
+          {this.props.rows.map(({ _id, ...rest }) => (
+            <TableRow key={_id} keys={this.props.fields} values={rest} />
+          ))}
+        </Table.Body>
 
         <Table.Footer fullWidth>
           <Table.Row>

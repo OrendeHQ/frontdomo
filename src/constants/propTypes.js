@@ -9,3 +9,14 @@ export const token = PropTypes.shape({
   error: PropTypes.string.isRequired,
   isAdmin: PropTypes.bool.isRequired,
 });
+
+export const company = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+});
+
+export const companyRedux = PropTypes.shape({
+  status: statuses.isRequired,
+  value: PropTypes.arrayOf(company).isRequired,
+  error: PropTypes.string.isRequired,
+});

@@ -13,4 +13,9 @@ export const defaultState = {
     error: '',
     isAdmin: storedToken ? storedToken.isAdmin : false,
   },
+  company: {
+    status: NONE,
+    value: [],
+    error: '',
+  },
 };
