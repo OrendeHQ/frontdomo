@@ -19,3 +19,12 @@ export const createNewCompany = async (company, token) =>
       body: JSON.stringify(company),
     }),
   );
+
+export const editCompany = async (company, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}`, {
+      method: 'PUT',
+      headers: { Authorization: token, 'Content-Type': 'application/json' },
+      body: JSON.stringify(company),
+    }),
+  );

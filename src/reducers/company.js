@@ -4,6 +4,7 @@ import {
   COMPANY_SUCCESS,
   COMPANY_TOGGLE_EDIT,
   COMPANY_ADD,
+  COMPANY_EDIT,
 } from 'constants/actionTypes';
 import { LOADING, SUCCESS, ERROR } from 'constants/misc';
 
@@ -35,6 +36,17 @@ export default function company(state = {}, { payload, type }) {
       return Object.assign({}, state, {
         status: SUCCESS,
         value: [...state.value, payload],
+      });
+    case COMPANY_EDIT:
+      return Object.assign({}, state, {
+        status: SUCCESS,
+        value: [
+          ...state.value.slice(0, payload.index),
+          Object.assign({}, state.value[payload.index], payload.company, {
+            editing: false,
+          }),
+          ...state.value.slice(payload.index + 1),
+        ],
       });
     default:
       return state;

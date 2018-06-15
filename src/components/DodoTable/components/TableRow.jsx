@@ -20,6 +20,10 @@ export default class TableRow extends React.Component {
     ).isRequired,
     toggleEdit: PropTypes.func.isRequired,
     saveFunc: PropTypes.func.isRequired,
+    entryID: PropTypes.string,
+  };
+  static defaultProps = {
+    entryID: null,
   };
 
   save = () => {
@@ -27,6 +31,10 @@ export default class TableRow extends React.Component {
     this.props.fields.forEach(({ key }) => {
       postObj[key] = this[key].value;
     });
+
+    if (this.props.entryID) {
+      postObj.id = this.props.entryID;
+    }
 
     this.props.saveFunc(postObj);
   };

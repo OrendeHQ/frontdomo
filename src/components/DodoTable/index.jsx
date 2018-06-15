@@ -25,6 +25,7 @@ export default class DodoTable extends React.Component {
     defaultAddValue: PropTypes.object.isRequired,
     toggleAdd: PropTypes.func.isRequired,
     addFunc: PropTypes.func.isRequired,
+    editFunc: PropTypes.func.isRequired,
   };
 
   render() {
@@ -50,9 +51,10 @@ export default class DodoTable extends React.Component {
               <TableRow
                 key={_id}
                 fields={this.props.fields}
+                entryID={_id}
                 values={rest}
                 toggleEdit={() => this.props.toggleEdit(i)}
-                saveFunc={() => {}}
+                saveFunc={this.props.editFunc}
               />
             ))}
             {this.props.adding && (

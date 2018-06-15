@@ -1,12 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container, Grid, Header, Icon } from 'semantic-ui-react';
+import { Container, Grid, Header, Icon, Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import DodoTable from 'components/DodoTable';
-import { fetchAllCompanies, toggleCompanyEdit, addNewCompany } from 'actions';
+import {
+  fetchAllCompanies,
+  toggleCompanyEdit,
+  addNewCompany,
+  editExistingCompany,
+} from 'actions';
 import { companyRedux } from 'constants/propTypes';
-import { LOADING } from 'constants/misc';
+import { LOADING, ERROR } from 'constants/misc';
 
 const StyleWrapper = styled(Container)``;
 
@@ -16,7 +21,27 @@ class PartnersPage extends React.Component {
   };
   state = {
     adding: false,
+    showErr: false,
   };
+
+  shouldComponentUpdate(nextProps) {
+    if (
+      this.props.company.status !== ERROR &&
+      nextProps.company.status === ERROR
+    ) {
+      if (this.timeoutShowErr) {
+        clearTimeout(this.timeoutShowErr);
+      }
+      if (!this.state.showErr) {
+        this.toggleShowErr();
+      }
+      this.timeoutShowErr = setTimeout(this.toggleShowErr, 10000);
+
+      return this.state.showErr;
+    }
+
+    return true;
+  }
 
   componentDidMount() {
     this.props.fetchAllCompanies();
@@ -29,6 +54,14 @@ class PartnersPage extends React.Component {
   add = company => {
     this.props.addNewCompany(company);
     this.toggleAdding();
+  };
+
+  edit = company => {
+    this.props.editExistingCompany(company);
+  };
+
+  toggleShowErr = () => {
+    this.setState({ showErr: !this.state.showErr });
   };
 
   render() {
@@ -54,6 +87,16 @@ class PartnersPage extends React.Component {
               <Header.Content>Partners</Header.Content>
             </Header>
           </Grid.Row>
+          {this.props.company.status === ERROR &&
+            this.state.showErr && (
+              <Grid.Row centered>
+                <Message negative>
+                  <p>
+                    <strong>Error!</strong> {this.props.company.error}
+                  </p>
+                </Message>
+              </Grid.Row>
+            )}
           <Grid.Row centered>
             <DodoTable
               loading={this.props.company.status === LOADING}
@@ -65,6 +108,7 @@ class PartnersPage extends React.Component {
               defaultAddValue={{ name: '', editing: true }}
               toggleAdd={this.toggleAdding}
               addFunc={this.add}
+              editFunc={this.edit}
             />
           </Grid.Row>
         </Grid>
@@ -75,5 +119,5 @@ class PartnersPage extends React.Component {
 
 export default connect(
   ({ company }) => ({ company }),
-  { fetchAllCompanies, toggleCompanyEdit, addNewCompany },
+  { fetchAllCompanies, toggleCompanyEdit, addNewCompany, editExistingCompany },
 )(PartnersPage);
