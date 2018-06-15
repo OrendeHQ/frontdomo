@@ -1,5 +1,12 @@
 import React from 'react';
-import { Table, Button, Icon, FormField } from 'semantic-ui-react';
+import {
+  Table,
+  Button,
+  Icon,
+  FormField,
+  Modal,
+  Header,
+} from 'semantic-ui-react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -21,9 +28,18 @@ export default class TableRow extends React.Component {
     toggleEdit: PropTypes.func.isRequired,
     saveFunc: PropTypes.func.isRequired,
     entryID: PropTypes.string,
+    deleteFunc: PropTypes.func,
   };
   static defaultProps = {
     entryID: null,
+    deleteFunc: () => {},
+  };
+  state = {
+    modal: false,
+  };
+
+  toggleModal = () => {
+    this.setState({ modal: !this.state.modal });
   };
 
   save = () => {
@@ -37,6 +53,11 @@ export default class TableRow extends React.Component {
     }
 
     this.props.saveFunc(postObj);
+  };
+
+  delete = () => {
+    this.props.deleteFunc();
+    this.toggleModal();
   };
 
   render() {
@@ -70,10 +91,30 @@ export default class TableRow extends React.Component {
                 <Icon name="edit" />
                 Edit
               </Button>
-              <Button icon labelPosition="left" negative size="small">
+              <Button
+                icon
+                labelPosition="left"
+                negative
+                size="small"
+                onClick={this.toggleModal}
+              >
                 <Icon name="delete" />
                 Delete
               </Button>
+              <Modal open={this.state.modal} basic size="small">
+                <Header icon="delete" content="Confirm Delete" />
+                <Modal.Content>
+                  <p>Are you sure you want to delete?</p>
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button basic color="red" inverted onClick={this.toggleModal}>
+                    <Icon name="remove" /> No
+                  </Button>
+                  <Button color="green" inverted onClick={this.delete}>
+                    <Icon name="checkmark" /> Yes
+                  </Button>
+                </Modal.Actions>
+              </Modal>
             </>
           ) : (
             <>

@@ -9,6 +9,7 @@ import {
   toggleCompanyEdit,
   addNewCompany,
   editExistingCompany,
+  removeCompany,
 } from 'actions';
 import { companyRedux } from 'constants/propTypes';
 import { LOADING, ERROR } from 'constants/misc';
@@ -109,6 +110,7 @@ class PartnersPage extends React.Component {
               toggleAdd={this.toggleAdding}
               addFunc={this.add}
               editFunc={this.edit}
+              deleteFunc={this.props.removeCompany}
             />
           </Grid.Row>
         </Grid>
@@ -119,5 +121,11 @@ class PartnersPage extends React.Component {
 
 export default connect(
   ({ company }) => ({ company }),
-  { fetchAllCompanies, toggleCompanyEdit, addNewCompany, editExistingCompany },
+  {
+    fetchAllCompanies,
+    toggleCompanyEdit,
+    addNewCompany,
+    editExistingCompany,
+    removeCompany,
+  },
 )(PartnersPage);

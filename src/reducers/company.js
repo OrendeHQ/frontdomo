@@ -5,6 +5,7 @@ import {
   COMPANY_TOGGLE_EDIT,
   COMPANY_ADD,
   COMPANY_EDIT,
+  COMPANY_DELETE,
 } from 'constants/actionTypes';
 import { LOADING, SUCCESS, ERROR } from 'constants/misc';
 
@@ -45,6 +46,14 @@ export default function company(state = {}, { payload, type }) {
           Object.assign({}, state.value[payload.index], payload.company, {
             editing: false,
           }),
+          ...state.value.slice(payload.index + 1),
+        ],
+      });
+    case COMPANY_DELETE:
+      return Object.assign({}, state, {
+        status: SUCCESS,
+        value: [
+          ...state.value.slice(0, payload.index),
           ...state.value.slice(payload.index + 1),
         ],
       });

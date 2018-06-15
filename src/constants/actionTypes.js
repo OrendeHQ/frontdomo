@@ -9,3 +9,4 @@ export const COMPANY_FAIL = '@company/FAIL';
 export const COMPANY_TOGGLE_EDIT = '@company/TOGGLE_EDIT';
 export const COMPANY_ADD = '@company/ADD';
 export const COMPANY_EDIT = '@company/EDIT';
+export const COMPANY_DELETE = '@company/DELETE';

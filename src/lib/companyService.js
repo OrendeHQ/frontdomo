@@ -28,3 +28,12 @@ export const editCompany = async (company, token) =>
       body: JSON.stringify(company),
     }),
   );
+
+export const deleteCompany = async ({ id }, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}`, {
+      method: 'DELETE',
+      headers: { Authorization: token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    }),
+  );
