@@ -10,3 +10,11 @@ export const COMPANY_TOGGLE_EDIT = '@company/TOGGLE_EDIT';
 export const COMPANY_ADD = '@company/ADD';
 export const COMPANY_EDIT = '@company/EDIT';
 export const COMPANY_DELETE = '@company/DELETE';
+
+export const USER_LOADING = '@user/LOADING';
+export const USER_SUCCESS = '@user/SUCCESS';
+export const USER_FAIL = '@user/FAIL';
+export const USER_TOGGLE_EDIT = '@user/TOGGLE_EDIT';
+export const USER_ADD = '@user/ADD';
+export const USER_EDIT = '@user/EDIT';
+export const USER_DELETE = '@user/DELETE';

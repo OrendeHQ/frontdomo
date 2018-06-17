@@ -23,6 +23,7 @@ export default class TableRow extends React.Component {
       PropTypes.shape({
         key: PropTypes.string.isRequired,
         editor: PropTypes.func.isRequired,
+        display: PropTypes.func.isRequired,
       }),
     ).isRequired,
     toggleEdit: PropTypes.func.isRequired,
@@ -64,10 +65,10 @@ export default class TableRow extends React.Component {
     return (
       <StyledTRow>
         {this.props.fields.map(
-          ({ key, editor: Editor }) =>
+          ({ key, editor: Editor, display: Display }) =>
             this.props.values.editing ? (
               <Table.Cell key={key}>
-                <FormField className="ui input">
+                <FormField className="ui input field">
                   <Editor
                     defaultValue={this.props.values[key]}
                     innerRef={i => (this[key] = i)}
@@ -75,7 +76,9 @@ export default class TableRow extends React.Component {
                 </FormField>
               </Table.Cell>
             ) : (
-              <Table.Cell key={key}>{this.props.values[key]}</Table.Cell>
+              <Table.Cell key={key}>
+                <Display value={this.props.values[key]} />
+              </Table.Cell>
             ),
         )}
         <Table.Cell collapsing>

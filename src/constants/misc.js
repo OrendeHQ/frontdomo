@@ -18,4 +18,9 @@ export const defaultState = {
     value: [],
     error: '',
   },
+  user: {
+    status: NONE,
+    value: [],
+    error: '',
+  },
 };

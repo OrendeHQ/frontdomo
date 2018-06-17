@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { NONE, ERROR, SUCCESS, LOADING } from 'constants/misc';
+import { requiredIf } from 'lib/propTypes';
 
 export const statuses = PropTypes.oneOf([NONE, ERROR, SUCCESS, LOADING]);
 
@@ -14,9 +15,24 @@ export const company = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 });
-
 export const companyRedux = PropTypes.shape({
   status: statuses.isRequired,
   value: PropTypes.arrayOf(company).isRequired,
+  error: PropTypes.string.isRequired,
+});
+
+export const user = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  is_admin: PropTypes.bool.isRequired,
+  company_id: requiredIf(
+    PropTypes.oneOfType([PropTypes.string, company]),
+    ({ is_admin: isAdmin }) => !isAdmin,
+  ),
+});
+export const userRedux = PropTypes.shape({
+  status: statuses.isRequired,
+  value: PropTypes.arrayOf(user).isRequired,
   error: PropTypes.string.isRequired,
 });

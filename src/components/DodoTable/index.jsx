@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Icon, Loader, Dimmer } from 'semantic-ui-react';
+import { Table, Loader, Dimmer } from 'semantic-ui-react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -15,6 +15,7 @@ export default class DodoTable extends React.Component {
       PropTypes.shape({
         key: PropTypes.string.isRequired,
         editor: PropTypes.func.isRequired,
+        display: PropTypes.func.isRequired,
       }),
     ).isRequired,
     headers: PropTypes.object.isRequired,
@@ -23,13 +24,15 @@ export default class DodoTable extends React.Component {
     toggleEdit: PropTypes.func.isRequired,
     adding: PropTypes.bool.isRequired,
     defaultAddValue: PropTypes.object.isRequired,
-    toggleAdd: PropTypes.func.isRequired,
+    addButton: PropTypes.func.isRequired,
     addFunc: PropTypes.func.isRequired,
     editFunc: PropTypes.func.isRequired,
     deleteFunc: PropTypes.func.isRequired,
   };
 
   render() {
+    const AddButton = this.props.addButton;
+
     return (
       <StyleWrapper>
         <Dimmer active={this.props.loading} inverted>
@@ -72,17 +75,8 @@ export default class DodoTable extends React.Component {
           <Table.Footer fullWidth>
             <Table.Row>
               {!this.props.adding && (
-                <Table.HeaderCell colSpan="4">
-                  <Button
-                    floated="right"
-                    icon
-                    labelPosition="left"
-                    positive
-                    size="small"
-                    onClick={this.props.toggleAdd}
-                  >
-                    <Icon name="building" /> Add Partner
-                  </Button>
+                <Table.HeaderCell colSpan="99">
+                  <AddButton />
                 </Table.HeaderCell>
               )}
             </Table.Row>

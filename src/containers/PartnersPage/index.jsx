@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container, Grid, Header, Icon, Message } from 'semantic-ui-react';
+import {
+  Container,
+  Grid,
+  Header,
+  Icon,
+  Message,
+  Button,
+} from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import DodoTable from 'components/DodoTable';
@@ -76,6 +83,7 @@ class PartnersPage extends React.Component {
             placeholder="Enter Company Name..."
           />
         ),
+        display: ({ value, ...props }) => <p {...props}>{value}</p>,
       },
     ];
 
@@ -107,8 +115,19 @@ class PartnersPage extends React.Component {
               toggleEdit={this.props.toggleCompanyEdit}
               adding={this.state.adding}
               defaultAddValue={{ name: '', editing: true }}
-              toggleAdd={this.toggleAdding}
               addFunc={this.add}
+              addButton={() => (
+                <Button
+                  floated="right"
+                  icon
+                  labelPosition="left"
+                  positive
+                  size="small"
+                  onClick={this.toggleAdding}
+                >
+                  <Icon name="building" /> Add Partner
+                </Button>
+              )}
               editFunc={this.edit}
               deleteFunc={this.props.removeCompany}
             />

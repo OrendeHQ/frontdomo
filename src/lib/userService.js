@@ -11,3 +11,11 @@ export const login = async ({ username, password }) =>
       body: JSON.stringify({ username, password }),
     }),
   );
+
+export const getAllUsers = async ({ token }) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}`, {
+      method: 'GET',
+      headers: { Authorization: token },
+    }),
+  );
