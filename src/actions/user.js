@@ -2,12 +2,17 @@ import {
   USER_FAIL,
   USER_LOADING,
   USER_ADD,
-  // USER_DELETE,
+  USER_DELETE,
   USER_EDIT,
   USER_SUCCESS,
   USER_TOGGLE_EDIT,
 } from 'constants/actionTypes';
-import { getAllUsers, createNewUser, editUser } from 'lib/userService';
+import {
+  getAllUsers,
+  createNewUser,
+  editUser,
+  deleteUser,
+} from 'lib/userService';
 import { tokenClear } from './token';
 import { withAuth } from 'lib/misc';
 
@@ -16,7 +21,7 @@ const userSuccess = payload => ({ type: USER_SUCCESS, payload });
 const userFail = payload => ({ type: USER_FAIL, payload });
 const userAdd = payload => ({ type: USER_ADD, payload });
 const userEdit = payload => ({ type: USER_EDIT, payload });
-// const userDelete = payload => ({ type: USER_DELETE, payload });
+const userDelete = payload => ({ type: USER_DELETE, payload });
 
 export const fetchAllUsers = () => async (dispatchEvent, getState) => {
   const { token } = getState();
@@ -61,6 +66,19 @@ export const editExistingUser = u => async (dispatchEvent, getState) => {
     dispatchEvent(userEdit({ user: res, index }));
   } catch (e) {
     dispatchEvent(toggleUserEdit(index));
+    dispatchEvent(userFail(e));
+  }
+};
+
+export const removeUser = ({ id }) => async (dispatchEvent, getState) => {
+  const { token, user } = getState();
+  const index = user.value.findIndex(v => v._id === id);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  dispatchEvent(userLoading());
+  try {
+    await withAuth(deleteUser({ id }, token.value), dispatchFunc);
+    dispatchEvent(userDelete({ index }));
+  } catch (e) {
     dispatchEvent(userFail(e));
   }
 };

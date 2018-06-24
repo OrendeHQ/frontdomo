@@ -19,6 +19,7 @@ import {
   toggleUserEdit,
   addNewUser,
   editExistingUser,
+  removeUser,
 } from 'actions';
 import { userRedux, companyRedux } from 'constants/propTypes';
 import { ERROR, LOADING } from 'constants/misc';
@@ -217,7 +218,7 @@ class UsersPage extends React.Component {
                 </Button>
               )}
               editFunc={this.edit}
-              deleteFunc={() => {}}
+              deleteFunc={this.props.removeUser}
             />
           </Grid.Row>
         </Grid>
@@ -277,5 +278,6 @@ export default connect(
     toggleUserEdit,
     addNewUser,
     editExistingUser,
+    removeUser,
   },
 )(UsersPage);
