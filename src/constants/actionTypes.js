@@ -18,3 +18,11 @@ export const USER_TOGGLE_EDIT = '@user/TOGGLE_EDIT';
 export const USER_ADD = '@user/ADD';
 export const USER_EDIT = '@user/EDIT';
 export const USER_DELETE = '@user/DELETE';
+
+export const ROBOT_LOADING = '@robot/LOADING';
+export const ROBOT_SUCCESS = '@robot/SUCCESS';
+export const ROBOT_FAIL = '@robot/FAIL';
+export const ROBOT_TOGGLE_EDIT = '@robot/TOGGLE_EDIT';
+export const ROBOT_ADD = '@robot/ADD';
+export const ROBOT_EDIT = '@robot/EDIT';
+export const ROBOT_DELETE = '@robot/DELETE';

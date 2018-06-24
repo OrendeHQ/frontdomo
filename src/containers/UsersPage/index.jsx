@@ -191,7 +191,10 @@ class UsersPage extends React.Component {
               ))}
           <Grid.Row centered>
             <DodoTable
-              loading={this.props.company.status === LOADING}
+              loading={
+                this.props.company.status === LOADING ||
+                this.props.user.status === LOADING
+              }
               fields={fields}
               headers={{
                 username: 'Username',
@@ -202,7 +205,13 @@ class UsersPage extends React.Component {
               rows={this.props.user.value}
               toggleEdit={this.props.toggleUserEdit}
               adding={this.state.adding}
-              defaultAddValue={{ name: '', editing: true }}
+              defaultAddValue={{
+                username: '',
+                email: '',
+                is_admin: false,
+                company_id: '',
+                editing: true,
+              }}
               addFunc={this.add}
               toggleAdd={this.toggleAdding}
               addButton={() => (

@@ -14,6 +14,7 @@ import AdminHomePage from 'containers/AdminHomePage';
 import HomePage from 'containers/HomePage';
 import PartnersPage from 'containers/PartnersPage';
 import UsersPage from 'containers/UsersPage';
+import RobotsPage from 'containers/RobotsPage';
 
 const router = (
   <Provider store={store}>
@@ -33,6 +34,7 @@ const router = (
                     component={PartnersPage}
                   />
                   <Route exact path="/admin/users" component={UsersPage} />
+                  <Route exact path="/admin/robots" component={RobotsPage} />
                   <Route exact path="/admin" component={AdminHomePage} />
                 </Switch>
               </AdminLayout>

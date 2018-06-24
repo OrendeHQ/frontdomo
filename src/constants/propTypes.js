@@ -36,3 +36,18 @@ export const userRedux = PropTypes.shape({
   value: PropTypes.arrayOf(user).isRequired,
   error: PropTypes.string.isRequired,
 });
+
+export const robot = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  leaser_id: requiredIf(
+    PropTypes.oneOfType([PropTypes.string, company]),
+    ({ is_admin: isAdmin }) => !isAdmin,
+  ),
+  model: PropTypes.oneOf(['V1']).isRequired,
+  start_date: PropTypes.string.isRequired,
+});
+export const robotRedux = PropTypes.shape({
+  status: statuses.isRequired,
+  value: PropTypes.arrayOf(robot).isRequired,
+  error: PropTypes.string.isRequired,
+});

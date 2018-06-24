@@ -23,4 +23,9 @@ export const defaultState = {
     value: [],
     error: '',
   },
+  robot: {
+    status: NONE,
+    value: [],
+    error: '',
+  },
 };

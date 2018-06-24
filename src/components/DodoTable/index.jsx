@@ -52,15 +52,17 @@ export default class DodoTable extends React.Component {
           </Table.Header>
 
           <Table.Body>
-            {this.props.rows.map(({ _id, ...rest }, i) => (
+            {this.props.rows.map((values, i) => (
               <TableRow
-                key={_id}
+                key={values._id}
                 fields={this.props.fields}
-                entryID={_id}
-                values={rest}
+                entryID={values._id}
+                values={values}
                 toggleEdit={() => this.props.toggleEdit(i)}
                 saveFunc={this.props.editFunc}
-                deleteFunc={this.props.deleteFunc.bind(null, { id: _id })}
+                deleteFunc={this.props.deleteFunc.bind(null, {
+                  id: values._id,
+                })}
               />
             ))}
             {this.props.adding && (
