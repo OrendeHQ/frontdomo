@@ -17,6 +17,7 @@ import {
   fetchAllRobots,
   addNewRobot,
   editExistingRobot,
+  removeRobot,
 } from 'actions';
 import { robotRedux, companyRedux } from 'constants/propTypes';
 import { ERROR, LOADING } from 'constants/misc';
@@ -147,7 +148,7 @@ class RobotsPage extends React.Component {
                 </Button>
               )}
               editFunc={this.edit}
-              deleteFunc={() => {}}
+              deleteFunc={this.props.removeRobot}
             />
           </Grid.Row>
         </Grid>
@@ -164,5 +165,6 @@ export default connect(
     fetchAllRobots,
     addNewRobot,
     editExistingRobot,
+    removeRobot,
   },
 )(RobotsPage);

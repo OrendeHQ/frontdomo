@@ -1,13 +1,18 @@
 import {
   ROBOT_ADD,
-  // ROBOT_DELETE,
+  ROBOT_DELETE,
   ROBOT_EDIT,
   ROBOT_FAIL,
   ROBOT_LOADING,
   ROBOT_SUCCESS,
   ROBOT_TOGGLE_EDIT,
 } from 'constants/actionTypes';
-import { getAllRobots, createNewRobot, editRobot } from 'lib/robotService';
+import {
+  getAllRobots,
+  createNewRobot,
+  editRobot,
+  deleteRobot,
+} from 'lib/robotService';
 import { tokenClear } from './token';
 import { withAuth } from 'lib/misc';
 
@@ -16,7 +21,7 @@ const robotSuccess = payload => ({ type: ROBOT_SUCCESS, payload });
 const robotFail = payload => ({ type: ROBOT_FAIL, payload });
 const robotAdd = payload => ({ type: ROBOT_ADD, payload });
 const robotEdit = payload => ({ type: ROBOT_EDIT, payload });
-// const robotDelete = payload => ({ type: ROBOT_DELETE, payload });
+const robotDelete = payload => ({ type: ROBOT_DELETE, payload });
 
 export const toggleRobotEdit = index => ({
   type: ROBOT_TOGGLE_EDIT,
@@ -58,5 +63,18 @@ export const editExistingRobot = rb => async (dispatchEvent, getState) => {
   } catch (e) {
     dispatchEvent(robotFail(e));
     dispatchEvent(toggleRobotEdit(index));
+  }
+};
+
+export const removeRobot = ({ id }) => async (dispatchEvent, getState) => {
+  const { token, robot } = getState();
+  const index = robot.value.findIndex(v => v._id === id);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  dispatchEvent(robotLoading());
+  try {
+    await withAuth(deleteRobot({ id }, token.value), dispatchFunc);
+    dispatchEvent(robotDelete({ index }));
+  } catch (e) {
+    dispatchEvent(robotFail(e));
   }
 };
