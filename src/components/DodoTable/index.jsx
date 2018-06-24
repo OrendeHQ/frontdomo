@@ -21,6 +21,7 @@ export default class DodoTable extends React.Component {
     headers: PropTypes.object.isRequired,
     rows: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
+    toggleAdd: PropTypes.func.isRequired,
     toggleEdit: PropTypes.func.isRequired,
     adding: PropTypes.bool.isRequired,
     defaultAddValue: PropTypes.object.isRequired,

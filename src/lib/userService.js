@@ -19,3 +19,29 @@ export const getAllUsers = async ({ token }) =>
       headers: { Authorization: token },
     }),
   );
+
+export const createNewUser = async (user, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: token },
+      body: JSON.stringify(user),
+    }),
+  );
+
+export const editUser = async (user, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', Authorization: token },
+      body: JSON.stringify(user),
+    }),
+  );
+
+export const deleteUser = async ({ id }, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: token },
+    }),
+  );

@@ -7,11 +7,18 @@ import {
   Icon,
   Message,
   Button,
+  Modal,
+  Form,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import DodoTable from 'components/DodoTable';
-import { fetchAllCompanies, fetchAllUsers, toggleUserEdit } from 'actions';
+import {
+  fetchAllCompanies,
+  fetchAllUsers,
+  toggleUserEdit,
+  addNewUser,
+} from 'actions';
 import { userRedux, companyRedux } from 'constants/propTypes';
 import { ERROR, LOADING } from 'constants/misc';
 
@@ -25,6 +32,9 @@ class UsersPage extends React.Component {
   state = {
     adding: false,
     showErr: false,
+    user: null,
+    passwordModal: false,
+    passwordErr: '',
   };
 
   shouldComponentUpdate(nextProps) {
@@ -56,7 +66,39 @@ class UsersPage extends React.Component {
     this.setState({ adding: !this.state.adding });
   };
 
-  add = (/*user*/) => {};
+  add = user => {
+    this.setState({ user, passwordModal: true });
+  };
+
+  postUser = () => {
+    const password = this.passwordInput.value;
+    const confirmPassword = this.confirmPasswordInput.value;
+    if (!password || !confirmPassword) {
+      return this.setState({
+        passwordErr: 'Please enter both password and password confirmation',
+      });
+    } else if (password.length < 8) {
+      return this.setState({
+        passwordErr: 'Password must be at least 8 characters',
+      });
+    } else if (password !== confirmPassword) {
+      return this.setState({
+        passwordErr: "Password and password confirmation doesn't match",
+      });
+    }
+
+    const postedUser = Object.assign({}, this.state.user, {
+      password: password,
+      company_id:
+        this.state.user.is_admin === 'true' ? null : this.state.user.company_id,
+    });
+    this.props.addNewUser(postedUser);
+    this.setState({ passwordModal: false, adding: false, passwordErr: '' });
+  };
+
+  toggleModal = () => {
+    this.setState({ passwordModal: !this.state.passwordModal });
+  };
 
   edit = (/*user*/) => {};
 
@@ -69,14 +111,24 @@ class UsersPage extends React.Component {
       {
         key: 'username',
         editor: ({ innerRef, ...props }) => (
-          <input ref={innerRef} {...props} disabled />
+          <input
+            ref={innerRef}
+            {...props}
+            placeholder="Enter username"
+            disabled={!!props.defaultValue}
+          />
         ),
         display: ({ value }) => <p>{value}</p>,
       },
       {
         key: 'email',
         editor: ({ innerRef, ...props }) => (
-          <input ref={innerRef} {...props} placeholder="Enter Email..." />
+          <input
+            ref={innerRef}
+            {...props}
+            placeholder="Enter Email..."
+            disabled={!!props.defaultValue}
+          />
         ),
         display: ({ value }) => <p>{value}</p>,
       },
@@ -115,8 +167,8 @@ class UsersPage extends React.Component {
         <Grid columns="equal">
           <Grid.Row centered>
             <Header as="h2" icon textAlign="center">
-              <Icon name="building" circular />
-              <Header.Content>Partners</Header.Content>
+              <Icon name="user" circular />
+              <Header.Content>Users</Header.Content>
             </Header>
           </Grid.Row>
           {this.props.company.status === ERROR ||
@@ -148,6 +200,7 @@ class UsersPage extends React.Component {
               adding={this.state.adding}
               defaultAddValue={{ name: '', editing: true }}
               addFunc={this.add}
+              toggleAdd={this.toggleAdding}
               addButton={() => (
                 <Button
                   floated="right"
@@ -157,7 +210,7 @@ class UsersPage extends React.Component {
                   size="small"
                   onClick={this.toggleAdding}
                 >
-                  <Icon name="building" /> Add Partner
+                  <Icon name="user" /> Add User
                 </Button>
               )}
               editFunc={this.edit}
@@ -165,6 +218,49 @@ class UsersPage extends React.Component {
             />
           </Grid.Row>
         </Grid>
+        <Modal open={this.state.passwordModal} size="small">
+          <Modal.Header>Enter Password</Modal.Header>
+          <Modal.Content>
+            {this.state.passwordErr && (
+              <Message negative>
+                <strong>Error!</strong> {this.state.passwordErr}
+              </Message>
+            )}
+            <Form onSubmit={this.postUser}>
+              <Form.Field>
+                <label>Password</label>
+                <input
+                  placeholder="Enter Password"
+                  ref={i => (this.passwordInput = i)}
+                  type="password"
+                  required
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Confirm Password</label>
+                <input
+                  placeholder="Confirm Password"
+                  ref={i => (this.confirmPasswordInput = i)}
+                  type="password"
+                  required
+                />
+              </Form.Field>
+              <div style={{ height: '30px' }}>
+                <Button floated="right" type="submit" icon color="green">
+                  <Icon name="checkmark" /> Submit
+                </Button>
+                <Button
+                  floated="right"
+                  type="button"
+                  icon
+                  onClick={this.toggleModal}
+                >
+                  <Icon name="remove" /> Cancel
+                </Button>
+              </div>
+            </Form>
+          </Modal.Content>
+        </Modal>
       </StyleWrapper>
     );
   }
@@ -172,5 +268,5 @@ class UsersPage extends React.Component {
 
 export default connect(
   ({ company, user }) => ({ company, user }),
-  { fetchAllCompanies, fetchAllUsers, toggleUserEdit },
+  { fetchAllCompanies, fetchAllUsers, toggleUserEdit, addNewUser },
 )(UsersPage);
