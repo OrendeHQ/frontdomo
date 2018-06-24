@@ -16,6 +16,7 @@ import {
   toggleRobotEdit,
   fetchAllRobots,
   addNewRobot,
+  editExistingRobot,
 } from 'actions';
 import { robotRedux, companyRedux } from 'constants/propTypes';
 import { ERROR, LOADING } from 'constants/misc';
@@ -44,7 +45,9 @@ class RobotsPage extends React.Component {
     this.props.addNewRobot(robot);
     this.toggleAdding();
   };
-  edit = () => {};
+  edit = robot => {
+    this.props.editExistingRobot(robot);
+  };
 
   render() {
     const fields = [
@@ -155,5 +158,11 @@ class RobotsPage extends React.Component {
 
 export default connect(
   ({ company, robot }) => ({ company, robot }),
-  { fetchAllCompanies, toggleRobotEdit, fetchAllRobots, addNewRobot },
+  {
+    fetchAllCompanies,
+    toggleRobotEdit,
+    fetchAllRobots,
+    addNewRobot,
+    editExistingRobot,
+  },
 )(RobotsPage);
