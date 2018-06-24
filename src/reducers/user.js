@@ -43,7 +43,7 @@ export default function user(state = {}, { type, payload }) {
         status: SUCCESS,
         value: [
           ...state.value.slice(0, payload.index),
-          Object.assign({}, state.value[payload.index], payload.company, {
+          Object.assign({}, state.value[payload.index], payload.user, {
             editing: false,
           }),
           ...state.value.slice(payload.index + 1),

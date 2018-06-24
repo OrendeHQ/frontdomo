@@ -18,6 +18,7 @@ import {
   fetchAllUsers,
   toggleUserEdit,
   addNewUser,
+  editExistingUser,
 } from 'actions';
 import { userRedux, companyRedux } from 'constants/propTypes';
 import { ERROR, LOADING } from 'constants/misc';
@@ -100,7 +101,9 @@ class UsersPage extends React.Component {
     this.setState({ passwordModal: !this.state.passwordModal });
   };
 
-  edit = (/*user*/) => {};
+  edit = user => {
+    this.props.editExistingUser(user);
+  };
 
   toggleShowErr = () => {
     this.setState({ showErr: !this.state.showErr });
@@ -268,5 +271,11 @@ class UsersPage extends React.Component {
 
 export default connect(
   ({ company, user }) => ({ company, user }),
-  { fetchAllCompanies, fetchAllUsers, toggleUserEdit, addNewUser },
+  {
+    fetchAllCompanies,
+    fetchAllUsers,
+    toggleUserEdit,
+    addNewUser,
+    editExistingUser,
+  },
 )(UsersPage);
