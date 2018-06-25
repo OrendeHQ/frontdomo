@@ -12,6 +12,7 @@ const PrivateRoute = ({
   token,
   render,
   admin,
+  both,
   ...rest
 }) => (
   <Route
@@ -31,7 +32,9 @@ const PrivateRoute = ({
         <Component {...props} />
       );
 
-      if (admin) {
+      if (both) {
+        return successfulRender;
+      } else if (admin) {
         if (token.isAdmin) {
           return successfulRender;
         } else {

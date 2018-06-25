@@ -15,6 +15,7 @@ import HomePage from 'containers/HomePage';
 import PartnersPage from 'containers/PartnersPage';
 import UsersPage from 'containers/UsersPage';
 import RobotsPage from 'containers/RobotsPage';
+import ChangePasswordPage from 'containers/ChangePasswordPage';
 
 const router = (
   <Provider store={store}>
@@ -22,6 +23,12 @@ const router = (
       <Layout>
         <Switch>
           <PublicRoute exact path="/login" component={LoginPage} />
+          <PrivateRoute
+            both
+            exact
+            path="/change_password"
+            component={ChangePasswordPage}
+          />
           <PrivateRoute
             admin
             path="/admin"
