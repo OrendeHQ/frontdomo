@@ -8,9 +8,7 @@ import { history } from 'store';
 
 const StyleWrapper = styled.div`
   .app-content {
-    margin-top: 70px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 70px 20px 50px 20px;
   }
 `;
 

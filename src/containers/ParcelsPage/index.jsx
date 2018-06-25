@@ -9,12 +9,16 @@ import {
   Button,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-// import moment from 'moment';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-date-picker';
 
 import DodoTable from 'components/DodoTable';
-import { fetchAllParcels, toggleParcelEdit, addNewParcel } from 'actions';
+import {
+  fetchAllParcels,
+  toggleParcelEdit,
+  addNewParcel,
+  editExistingParcel,
+} from 'actions';
 import { parcelRedux } from 'constants/propTypes';
 import { LOADING, ERROR } from 'constants/misc';
 
@@ -39,7 +43,7 @@ class ParcelDatePicker extends React.Component {
     signalDateChange: PropTypes.func.isRequired,
   };
   state = {
-    date: null,
+    date: undefined,
   };
 
   handleDateChange = value => {
@@ -100,12 +104,18 @@ class ParcelsPage extends React.Component {
 
   add = parcel => {
     parcel.date_of_delivery = this.date || new Date();
+    parcel.customer_contact = '+65' + parcel.customer_contact;
     this.props.addNewParcel(parcel);
-    this.setState({ date: null });
+    this.date = undefined;
     this.toggleAdding();
   };
 
-  edit = () => {};
+  edit = parcel => {
+    parcel.date_of_delivery = this.date;
+    parcel.customer_contact = '+65' + parcel.customer_contact;
+    this.props.editExistingParcel(parcel);
+    this.date = undefined;
+  };
 
   toggleShowErr = () => {
     this.setState({ showErr: !this.state.showErr });
@@ -141,6 +151,9 @@ class ParcelsPage extends React.Component {
             <input
               ref={innerRef}
               defaultValue={defaultValue.substring(3)}
+              type="number"
+              min="0"
+              step="1"
               {...props}
               placeholder="Enter Customer Contact..."
             />
@@ -213,5 +226,5 @@ class ParcelsPage extends React.Component {
 
 export default connect(
   ({ parcel }) => ({ parcel }),
-  { fetchAllParcels, toggleParcelEdit, addNewParcel },
+  { fetchAllParcels, toggleParcelEdit, addNewParcel, editExistingParcel },
 )(ParcelsPage);
