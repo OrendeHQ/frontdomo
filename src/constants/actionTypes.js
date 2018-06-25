@@ -26,3 +26,11 @@ export const ROBOT_TOGGLE_EDIT = '@robot/TOGGLE_EDIT';
 export const ROBOT_ADD = '@robot/ADD';
 export const ROBOT_EDIT = '@robot/EDIT';
 export const ROBOT_DELETE = '@robot/DELETE';
+
+export const PARCEL_LOADING = '@parcel/LOADING';
+export const PARCEL_SUCCESS = '@parcel/SUCCESS';
+export const PARCEL_FAIL = '@parcel/FAIL';
+export const PARCEL_TOGGLE_EDIT = '@parcel/TOGGLE_EDIT';
+export const PARCEL_ADD = '@parcel/ADD';
+export const PARCEL_EDIT = '@parcel/EDIT';
+export const PARCEL_DELETE = '@parcel/DELETE';

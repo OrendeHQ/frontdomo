@@ -28,4 +28,9 @@ export const defaultState = {
     value: [],
     error: '',
   },
+  parcel: {
+    status: NONE,
+    value: [],
+    error: '',
+  },
 };

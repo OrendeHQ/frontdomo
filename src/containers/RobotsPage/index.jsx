@@ -37,12 +37,37 @@ class RobotsPage extends React.Component {
   };
   state = {
     adding: false,
+    showErr: false,
   };
+
+  shouldComponentUpdate(nextProps) {
+    if (
+      (this.props.robot.status !== ERROR && nextProps.robot.status === ERROR) ||
+      (this.props.company.status !== ERROR &&
+        nextProps.company.status === ERROR)
+    ) {
+      if (this.timeoutShowErr) {
+        clearTimeout(this.timeoutShowErr);
+      }
+      if (!this.state.showErr) {
+        this.toggleShowErr();
+      }
+      this.timeoutShowErr = setTimeout(this.toggleShowErr, 10000);
+
+      return this.state.showErr;
+    }
+
+    return true;
+  }
 
   componentDidMount() {
     this.props.fetchAllCompanies();
     this.props.fetchAllRobots();
   }
+
+  toggleShowErr = () => {
+    this.setState({ showErr: !this.state.showErr });
+  };
 
   toggleAdding = () => {
     this.setState({ adding: !this.state.adding });

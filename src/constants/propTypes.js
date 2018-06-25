@@ -51,3 +51,15 @@ export const robotRedux = PropTypes.shape({
   value: PropTypes.arrayOf(robot).isRequired,
   error: PropTypes.string.isRequired,
 });
+
+export const parcel = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+  date_of_delivery: PropTypes.string.isRequired,
+  customer_contact: PropTypes.string.isRequired,
+});
+export const parcelRedux = PropTypes.shape({
+  status: statuses.isRequired,
+  value: PropTypes.arrayOf(parcel).isRequired,
+  error: PropTypes.string.isRequired,
+});

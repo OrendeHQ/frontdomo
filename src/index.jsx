@@ -16,6 +16,7 @@ import PartnersPage from 'containers/PartnersPage';
 import UsersPage from 'containers/UsersPage';
 import RobotsPage from 'containers/RobotsPage';
 import ChangePasswordPage from 'containers/ChangePasswordPage';
+import ParcelsPage from 'containers/ParcelsPage';
 
 const router = (
   <Provider store={store}>
@@ -53,6 +54,7 @@ const router = (
               <UserLayout>
                 <Switch>
                   <Route exact path="/" component={HomePage} />
+                  <Route exact path="/parcels" component={ParcelsPage} />
                 </Switch>
               </UserLayout>
             )}

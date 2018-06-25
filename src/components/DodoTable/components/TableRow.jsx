@@ -68,7 +68,7 @@ export default class TableRow extends React.Component {
           ({ key, editor: Editor, display: Display }) =>
             this.props.values.editing ? (
               <Table.Cell key={key}>
-                <FormField className="ui input field">
+                <FormField className="ui input field labeled">
                   <Editor
                     defaultValue={this.props.values[key]}
                     innerRef={i => (this[key] = i)}
