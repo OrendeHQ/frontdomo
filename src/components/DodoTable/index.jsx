@@ -29,6 +29,10 @@ export default class DodoTable extends React.Component {
     addFunc: PropTypes.func.isRequired,
     editFunc: PropTypes.func.isRequired,
     deleteFunc: PropTypes.func.isRequired,
+    extraActions: PropTypes.arrayOf(PropTypes.func),
+  };
+  static defaultProps = {
+    extraActions: [],
   };
 
   render() {
@@ -63,6 +67,7 @@ export default class DodoTable extends React.Component {
                 deleteFunc={this.props.deleteFunc.bind(null, {
                   id: values._id,
                 })}
+                extraActions={this.props.extraActions}
               />
             ))}
             {this.props.adding && (

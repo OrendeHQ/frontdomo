@@ -19,8 +19,13 @@ import {
   editExistingRobot,
   removeRobot,
 } from 'actions';
-import { robotRedux, companyRedux } from 'constants/propTypes';
+import {
+  robotRedux,
+  companyRedux,
+  token as tokenType,
+} from 'constants/propTypes';
 import { ERROR, LOADING } from 'constants/misc';
+import TokenActionBtn from './components/TokenActionBtn';
 
 const StyleWrapper = styled(Container)``;
 
@@ -28,6 +33,7 @@ class RobotsPage extends React.Component {
   static propTypes = {
     robot: robotRedux,
     company: companyRedux,
+    token: tokenType,
   };
   state = {
     adding: false,
@@ -149,6 +155,14 @@ class RobotsPage extends React.Component {
               )}
               editFunc={this.edit}
               deleteFunc={this.props.removeRobot}
+              extraActions={[
+                ({ values }) => (
+                  <TokenActionBtn
+                    authToken={this.props.token.value}
+                    robotID={values._id}
+                  />
+                ),
+              ]}
             />
           </Grid.Row>
         </Grid>
@@ -158,7 +172,7 @@ class RobotsPage extends React.Component {
 }
 
 export default connect(
-  ({ company, robot }) => ({ company, robot }),
+  ({ company, robot, token }) => ({ company, robot, token }),
   {
     fetchAllCompanies,
     toggleRobotEdit,

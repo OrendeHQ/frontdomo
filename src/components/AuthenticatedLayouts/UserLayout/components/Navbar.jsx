@@ -29,10 +29,20 @@ class Navbar extends React.Component {
             <Icon name="sidebar" />
           </Menu.Item>
           <Menu.Menu position="right">
-            <Menu.Item>
-              <Icon name="settings" />
-              Settings
-            </Menu.Item>
+            <Dropdown
+              item
+              trigger={
+                <span>
+                  <Icon name="setting" /> Settings
+                </span>
+              }
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item as={Link} to="/change_password">
+                  <Icon name="key" /> Change Password
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <Menu.Item onClick={this.props.tokenClear}>
               <Icon name="log out" />
               Logout

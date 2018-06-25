@@ -29,11 +29,11 @@ export default class TableRow extends React.Component {
     toggleEdit: PropTypes.func.isRequired,
     saveFunc: PropTypes.func.isRequired,
     entryID: PropTypes.string,
-    deleteFunc: PropTypes.func,
+    deleteFunc: PropTypes.func.isRequired,
+    extraActions: PropTypes.arrayOf(PropTypes.func).isRequired,
   };
   static defaultProps = {
     entryID: null,
-    deleteFunc: () => {},
   };
   state = {
     modal: false,
@@ -104,6 +104,9 @@ export default class TableRow extends React.Component {
                 <Icon name="delete" />
                 Delete
               </Button>
+              {this.props.extraActions.map((Element, i) => (
+                <Element values={this.props.values} key={i} />
+              ))}
               <Modal open={this.state.modal} basic size="small">
                 <Header icon="delete" content="Confirm Delete" />
                 <Modal.Content>
