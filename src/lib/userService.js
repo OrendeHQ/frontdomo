@@ -45,3 +45,12 @@ export const deleteUser = async ({ id }, token) =>
       headers: { Authorization: token },
     }),
   );
+
+export const changePassword = async ({ oldPassword, password }, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}/change_password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: token },
+      body: JSON.stringify({ old_password: oldPassword, password }),
+    }),
+  );

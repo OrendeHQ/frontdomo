@@ -11,8 +11,7 @@ import {
 import PropTypes from 'prop-types';
 import Clipboard from 'react-clipboard.js';
 
-import { BASE_URL } from 'constants/misc';
-import serviceTemplate from 'lib/serviceTemplate';
+import { getRobotToken } from 'lib/robotService';
 
 export default class TokenActionBtn extends React.Component {
   state = {
@@ -34,12 +33,8 @@ export default class TokenActionBtn extends React.Component {
     }
 
     this.setState({ loading: true, modal: true });
-    serviceTemplate(
-      fetch(`${BASE_URL}/robot/token/${this.props.robotID}`, {
-        method: 'GET',
-        headers: { Authorization: this.props.authToken },
-      }),
-    )
+    const { robotID, authToken } = this.props;
+    getRobotToken({ robotID, authToken })
       .then(({ token }) => this.setState({ token, loading: false }))
       .catch(({ message }) =>
         this.setState({ error: message, loading: false }),
@@ -57,6 +52,12 @@ export default class TokenActionBtn extends React.Component {
     }
     this.popTimeout = setTimeout(() => this.setState({ popup: false }), 3000);
   };
+
+  componentWillUnmount() {
+    if (this.popTimeout) {
+      clearTimeout(this.popTimeout);
+    }
+  }
 
   render() {
     return (

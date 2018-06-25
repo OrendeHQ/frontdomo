@@ -36,3 +36,11 @@ export const deleteRobot = async ({ id }, token) =>
       headers: { Authorization: token },
     }),
   );
+
+export const getRobotToken = async ({ robotID, authToken }) =>
+  await serviceTemplate(
+    fetch(`${BASE_URL}/robot/token/${robotID}`, {
+      method: 'GET',
+      headers: { Authorization: authToken },
+    }),
+  );
