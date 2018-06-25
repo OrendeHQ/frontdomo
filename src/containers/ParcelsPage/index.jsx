@@ -18,6 +18,7 @@ import {
   toggleParcelEdit,
   addNewParcel,
   editExistingParcel,
+  removeParcel,
 } from 'actions';
 import { parcelRedux } from 'constants/propTypes';
 import { LOADING, ERROR } from 'constants/misc';
@@ -215,7 +216,7 @@ class ParcelsPage extends React.Component {
                 </Button>
               )}
               editFunc={this.edit}
-              deleteFunc={() => {}}
+              deleteFunc={this.props.removeParcel}
             />
           </Grid.Row>
         </Grid>
@@ -226,5 +227,11 @@ class ParcelsPage extends React.Component {
 
 export default connect(
   ({ parcel }) => ({ parcel }),
-  { fetchAllParcels, toggleParcelEdit, addNewParcel, editExistingParcel },
+  {
+    fetchAllParcels,
+    toggleParcelEdit,
+    addNewParcel,
+    editExistingParcel,
+    removeParcel,
+  },
 )(ParcelsPage);

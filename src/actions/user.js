@@ -25,7 +25,7 @@ const userDelete = payload => ({ type: USER_DELETE, payload });
 
 export const fetchAllUsers = () => async (dispatchEvent, getState) => {
   const { token } = getState();
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(userLoading());
 
   try {
@@ -46,7 +46,7 @@ export const toggleUserEdit = index => ({
 
 export const addNewUser = user => async (dispatchEvent, getState) => {
   const { token } = getState();
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(userLoading());
   try {
     const res = await withAuth(createNewUser(user, token.value), dispatchFunc);
@@ -59,7 +59,7 @@ export const addNewUser = user => async (dispatchEvent, getState) => {
 export const editExistingUser = u => async (dispatchEvent, getState) => {
   const { token, user } = getState();
   const index = user.value.findIndex(v => v._id === u.id);
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(userLoading());
   try {
     const res = await withAuth(editUser(u, token.value), dispatchFunc);
@@ -73,7 +73,7 @@ export const editExistingUser = u => async (dispatchEvent, getState) => {
 export const removeUser = ({ id }) => async (dispatchEvent, getState) => {
   const { token, user } = getState();
   const index = user.value.findIndex(v => v._id === id);
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(userLoading());
   try {
     await withAuth(deleteUser({ id }, token.value), dispatchFunc);

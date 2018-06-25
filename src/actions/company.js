@@ -25,7 +25,7 @@ const companyDelete = payload => ({ type: COMPANY_DELETE, payload });
 
 export const fetchAllCompanies = () => async (dispatchEvent, getState) => {
   const { token } = getState();
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(companyLoading());
   try {
     const { companies } = await withAuth(
@@ -45,7 +45,7 @@ export const toggleCompanyEdit = index => ({
 
 export const addNewCompany = company => async (dispatchEvent, getState) => {
   const { token } = getState();
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(companyLoading());
   try {
     const res = await withAuth(
@@ -61,7 +61,7 @@ export const addNewCompany = company => async (dispatchEvent, getState) => {
 export const editExistingCompany = comp => async (dispatchEvent, getState) => {
   const { token, company } = getState();
   const index = company.value.findIndex(v => v._id === comp.id);
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(companyLoading());
   try {
     const res = await withAuth(editCompany(comp, token.value), dispatchFunc);
@@ -75,7 +75,7 @@ export const editExistingCompany = comp => async (dispatchEvent, getState) => {
 export const removeCompany = ({ id }) => async (dispatchEvent, getState) => {
   const { token, company } = getState();
   const index = company.value.findIndex(v => v._id === id);
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(companyLoading());
   try {
     await withAuth(deleteCompany({ id }, token.value), dispatchFunc);

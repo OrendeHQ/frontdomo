@@ -29,7 +29,7 @@ export const editParcel = async (parcel, token) =>
     }),
   );
 
-export const deleteUser = async ({ id }, token) =>
+export const deleteParcel = async ({ id }, token) =>
   await serviceTemplate(
     fetch(`${SERVICE_URL}/${id}`, {
       method: 'DELETE',

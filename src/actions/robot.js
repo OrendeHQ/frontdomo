@@ -30,7 +30,7 @@ export const toggleRobotEdit = index => ({
 
 export const fetchAllRobots = () => async (dispatchEvent, getState) => {
   const { token } = getState();
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(robotLoading());
   try {
     const { robots } = await withAuth(getAllRobots(token.value), dispatchFunc);
@@ -42,7 +42,7 @@ export const fetchAllRobots = () => async (dispatchEvent, getState) => {
 
 export const addNewRobot = rb => async (dispatchEvent, getState) => {
   const { token } = getState();
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(robotLoading());
   try {
     const robot = await withAuth(createNewRobot(rb, token.value), dispatchFunc);
@@ -55,7 +55,7 @@ export const addNewRobot = rb => async (dispatchEvent, getState) => {
 export const editExistingRobot = rb => async (dispatchEvent, getState) => {
   const { token, robot } = getState();
   const index = robot.value.findIndex(v => v._id === rb.id);
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(robotLoading());
   try {
     const res = await withAuth(editRobot(rb, token.value), dispatchFunc);
@@ -69,7 +69,7 @@ export const editExistingRobot = rb => async (dispatchEvent, getState) => {
 export const removeRobot = ({ id }) => async (dispatchEvent, getState) => {
   const { token, robot } = getState();
   const index = robot.value.findIndex(v => v._id === id);
-  const dispatchFunc = dispatchEvent.bind(null, tokenClear);
+  const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(robotLoading());
   try {
     await withAuth(deleteRobot({ id }, token.value), dispatchFunc);
