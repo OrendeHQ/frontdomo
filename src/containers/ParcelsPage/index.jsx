@@ -9,8 +9,6 @@ import {
   Button,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import DatePicker from 'react-date-picker';
 
 import DodoTable from 'components/DodoTable';
 import {
@@ -20,8 +18,11 @@ import {
   editExistingParcel,
   removeParcel,
 } from 'actions';
-import { parcelRedux } from 'constants/propTypes';
+
+import { parcelRedux, token as tokenType } from 'constants/propTypes';
 import { LOADING, ERROR } from 'constants/misc';
+import ParcelDatePicker from './components/ParcelDatePicker';
+import BarcodeBtn from './components/BarcodeBtn';
 
 const StyleWrapper = styled(Container)`
   .react-date-picker {
@@ -37,35 +38,10 @@ const StyleWrapper = styled(Container)`
   }
 `;
 
-class ParcelDatePicker extends React.Component {
-  static propTypes = {
-    minDate: PropTypes.object,
-    defaultDate: PropTypes.object.isRequired,
-    signalDateChange: PropTypes.func.isRequired,
-  };
-  state = {
-    date: undefined,
-  };
-
-  handleDateChange = value => {
-    this.setState({ date: value });
-    this.props.signalDateChange(value);
-  };
-
-  render() {
-    return (
-      <DatePicker
-        minDate={new Date()}
-        value={new Date(this.state.date || this.props.defaultDate)}
-        onChange={this.handleDateChange}
-      />
-    );
-  }
-}
-
 class ParcelsPage extends React.Component {
   static propTypes = {
     parcel: parcelRedux,
+    token: tokenType,
   };
   state = {
     adding: false,
@@ -217,6 +193,14 @@ class ParcelsPage extends React.Component {
               )}
               editFunc={this.edit}
               deleteFunc={this.props.removeParcel}
+              extraActions={[
+                ({ values }) => (
+                  <BarcodeBtn
+                    parcelID={values._id}
+                    authToken={this.props.token.value}
+                  />
+                ),
+              ]}
             />
           </Grid.Row>
         </Grid>
@@ -226,7 +210,7 @@ class ParcelsPage extends React.Component {
 }
 
 export default connect(
-  ({ parcel }) => ({ parcel }),
+  ({ parcel, token }) => ({ parcel, token }),
   {
     fetchAllParcels,
     toggleParcelEdit,

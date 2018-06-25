@@ -1,5 +1,5 @@
 import { BASE_URL } from 'constants/misc';
-import serviceTemplate from 'lib/serviceTemplate';
+import serviceTemplate, { fileReq } from 'lib/serviceTemplate';
 
 const SERVICE_URL = BASE_URL + '/parcel';
 
@@ -34,5 +34,13 @@ export const deleteParcel = async ({ id }, token) =>
     fetch(`${SERVICE_URL}/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json', Authorization: token },
+    }),
+  );
+
+export const getParcelBarcode = async ({ id }, token) =>
+  await fileReq(
+    fetch(`${SERVICE_URL}/barcode/${id}`, {
+      method: 'GET',
+      headers: { Authorization: token },
     }),
   );
