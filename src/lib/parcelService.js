@@ -10,3 +10,29 @@ export const getAllParcels = async token =>
       headers: { Authorization: token },
     }),
   );
+
+export const createNewParcel = async (parcel, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: token },
+      body: JSON.stringify(parcel),
+    }),
+  );
+
+export const editParcel = async (parcel, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', Authorization: token },
+      body: JSON.stringify(parcel),
+    }),
+  );
+
+export const deleteUser = async ({ id }, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', Authorization: token },
+    }),
+  );

@@ -9,13 +9,54 @@ import {
   Button,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+// import moment from 'moment';
+import PropTypes from 'prop-types';
+import DatePicker from 'react-date-picker';
 
 import DodoTable from 'components/DodoTable';
-import { fetchAllParcels, toggleParcelEdit } from 'actions';
+import { fetchAllParcels, toggleParcelEdit, addNewParcel } from 'actions';
 import { parcelRedux } from 'constants/propTypes';
 import { LOADING, ERROR } from 'constants/misc';
 
-const StyleWrapper = styled(Container)``;
+const StyleWrapper = styled(Container)`
+  .react-date-picker {
+    .react-date-picker__button {
+      padding: 0 1em;
+      border-radius: 0.28571429rem;
+      height: 40px;
+      border: 1px solid rgba(34, 36, 38, 0.15);
+      line-height: 1.21428571em;
+      font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      color: rgba(0, 0, 0, 0.87);
+    }
+  }
+`;
+
+class ParcelDatePicker extends React.Component {
+  static propTypes = {
+    minDate: PropTypes.object,
+    defaultDate: PropTypes.object.isRequired,
+    signalDateChange: PropTypes.func.isRequired,
+  };
+  state = {
+    date: null,
+  };
+
+  handleDateChange = value => {
+    this.setState({ date: value });
+    this.props.signalDateChange(value);
+  };
+
+  render() {
+    return (
+      <DatePicker
+        minDate={new Date()}
+        value={new Date(this.state.date || this.props.defaultDate)}
+        onChange={this.handleDateChange}
+      />
+    );
+  }
+}
 
 class ParcelsPage extends React.Component {
   static propTypes = {
@@ -53,7 +94,16 @@ class ParcelsPage extends React.Component {
     this.setState({ adding: !this.state.adding });
   };
 
-  add = () => {};
+  setDate = date => {
+    this.date = date;
+  };
+
+  add = parcel => {
+    parcel.date_of_delivery = this.date || new Date();
+    this.props.addNewParcel(parcel);
+    this.setState({ date: null });
+    this.toggleAdding();
+  };
 
   edit = () => {};
 
@@ -72,10 +122,16 @@ class ParcelsPage extends React.Component {
       },
       {
         key: 'date_of_delivery',
-        editor: ({ innerRef, ...props }) => (
-          <input ref={innerRef} {...props} placeholder="Enter Date..." />
+        editor: ({ defaultValue }) => (
+          <ParcelDatePicker
+            minDate={new Date()}
+            defaultDate={new Date(defaultValue)}
+            signalDateChange={this.setDate}
+          />
         ),
-        display: ({ value, ...props }) => <p {...props}>{value}</p>,
+        display: ({ value, ...props }) => (
+          <p {...props}>{new Date(value).toDateString()}</p>
+        ),
       },
       {
         key: 'customer_contact',
@@ -127,7 +183,7 @@ class ParcelsPage extends React.Component {
               adding={this.state.adding}
               defaultAddValue={{
                 address: '',
-                date_of_delivery: new Date().toDateString(),
+                date_of_delivery: new Date(),
                 customer_contact: '',
                 editing: true,
               }}
@@ -157,5 +213,5 @@ class ParcelsPage extends React.Component {
 
 export default connect(
   ({ parcel }) => ({ parcel }),
-  { fetchAllParcels, toggleParcelEdit },
+  { fetchAllParcels, toggleParcelEdit, addNewParcel },
 )(ParcelsPage);
