@@ -6,6 +6,7 @@ import {
   ROBOT_LOADING,
   ROBOT_SUCCESS,
   ROBOT_TOGGLE_EDIT,
+  ROBOT_BATCH_DELETE,
 } from 'constants/actionTypes';
 import {
   getAllRobots,
@@ -15,6 +16,7 @@ import {
 } from 'lib/robotService';
 import { tokenClear } from './token';
 import { withAuth } from 'lib/misc';
+import { parcelBatchDelete } from './parcel';
 
 const robotLoading = () => ({ type: ROBOT_LOADING });
 const robotSuccess = payload => ({ type: ROBOT_SUCCESS, payload });
@@ -22,6 +24,11 @@ const robotFail = payload => ({ type: ROBOT_FAIL, payload });
 const robotAdd = payload => ({ type: ROBOT_ADD, payload });
 const robotEdit = payload => ({ type: ROBOT_EDIT, payload });
 const robotDelete = payload => ({ type: ROBOT_DELETE, payload });
+
+export const robotBatchDelete = payload => ({
+  type: ROBOT_BATCH_DELETE,
+  payload,
+});
 
 export const toggleRobotEdit = index => ({
   type: ROBOT_TOGGLE_EDIT,
@@ -67,13 +74,15 @@ export const editExistingRobot = rb => async (dispatchEvent, getState) => {
 };
 
 export const removeRobot = ({ id }) => async (dispatchEvent, getState) => {
-  const { token, robot } = getState();
+  const { token, robot, parcel } = getState();
   const index = robot.value.findIndex(v => v._id === id);
+  const parcelIndices = parcel.value.findIndex(v => v.robot_id === id);
   const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(robotLoading());
   try {
     await withAuth(deleteRobot({ id }, token.value), dispatchFunc);
     dispatchEvent(robotDelete({ index }));
+    dispatchEvent(parcelBatchDelete(parcelIndices));
   } catch (e) {
     dispatchEvent(robotFail(e));
   }

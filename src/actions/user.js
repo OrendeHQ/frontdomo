@@ -6,6 +6,7 @@ import {
   USER_EDIT,
   USER_SUCCESS,
   USER_TOGGLE_EDIT,
+  USER_BATCH_DELETE,
 } from 'constants/actionTypes';
 import {
   getAllUsers,
@@ -22,6 +23,11 @@ const userFail = payload => ({ type: USER_FAIL, payload });
 const userAdd = payload => ({ type: USER_ADD, payload });
 const userEdit = payload => ({ type: USER_EDIT, payload });
 const userDelete = payload => ({ type: USER_DELETE, payload });
+
+export const userBatchDelete = payload => ({
+  type: USER_BATCH_DELETE,
+  payload,
+});
 
 export const fetchAllUsers = () => async (dispatchEvent, getState) => {
   const { token } = getState();

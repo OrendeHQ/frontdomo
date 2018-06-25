@@ -17,3 +17,14 @@ export async function withAuth(actionProm, dispatchFunc) {
     throw e;
   }
 }
+
+export function getAllIndices(arr, filterFunc) {
+  const indices = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (filterFunc(arr[i])) {
+      indices.push(i);
+    }
+  }
+
+  return indices;
+}

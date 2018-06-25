@@ -114,6 +114,7 @@ class PartnersPage extends React.Component {
               rows={this.props.company.value}
               toggleEdit={this.props.toggleCompanyEdit}
               adding={this.state.adding}
+              toggleAdd={this.toggleAdding}
               defaultAddValue={{ name: '', editing: true }}
               addFunc={this.add}
               addButton={() => (

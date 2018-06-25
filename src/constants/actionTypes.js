@@ -18,6 +18,7 @@ export const USER_TOGGLE_EDIT = '@user/TOGGLE_EDIT';
 export const USER_ADD = '@user/ADD';
 export const USER_EDIT = '@user/EDIT';
 export const USER_DELETE = '@user/DELETE';
+export const USER_BATCH_DELETE = '@user/BATCH_DELETE';
 
 export const ROBOT_LOADING = '@robot/LOADING';
 export const ROBOT_SUCCESS = '@robot/SUCCESS';
@@ -26,6 +27,7 @@ export const ROBOT_TOGGLE_EDIT = '@robot/TOGGLE_EDIT';
 export const ROBOT_ADD = '@robot/ADD';
 export const ROBOT_EDIT = '@robot/EDIT';
 export const ROBOT_DELETE = '@robot/DELETE';
+export const ROBOT_BATCH_DELETE = '@robot/BATCH_DELETE';
 
 export const PARCEL_LOADING = '@parcel/LOADING';
 export const PARCEL_SUCCESS = '@parcel/SUCCESS';
@@ -34,3 +36,4 @@ export const PARCEL_TOGGLE_EDIT = '@parcel/TOGGLE_EDIT';
 export const PARCEL_ADD = '@parcel/ADD';
 export const PARCEL_EDIT = '@parcel/EDIT';
 export const PARCEL_DELETE = '@parcel/DELETE';
+export const PARCEL_BATCH_DELETE = '@parcel/BATCH_DELETE';

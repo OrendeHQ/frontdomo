@@ -14,7 +14,10 @@ import {
   deleteCompany,
 } from 'lib/companyService';
 import { tokenClear } from './token';
-import { withAuth } from 'lib/misc';
+import { withAuth, getAllIndices } from 'lib/misc';
+import { userBatchDelete } from './user';
+import { robotBatchDelete } from './robot';
+import { parcelBatchDelete } from './parcel';
 
 const companyLoading = () => ({ type: COMPANY_LOADING });
 const companySuccess = payload => ({ type: COMPANY_SUCCESS, payload });
@@ -73,13 +76,19 @@ export const editExistingCompany = comp => async (dispatchEvent, getState) => {
 };
 
 export const removeCompany = ({ id }) => async (dispatchEvent, getState) => {
-  const { token, company } = getState();
+  const { token, company, user, robot, parcel } = getState();
   const index = company.value.findIndex(v => v._id === id);
+  const userIndices = getAllIndices(user.value, v => v.company_id === id);
+  const robotIndices = getAllIndices(robot.value, v => v.leaser_id === id);
+  const parcelIndices = getAllIndices(parcel.value, v => v.company_id === id);
   const dispatchFunc = dispatchEvent.bind(null, tokenClear());
   dispatchEvent(companyLoading());
   try {
     await withAuth(deleteCompany({ id }, token.value), dispatchFunc);
     dispatchEvent(companyDelete({ index }));
+    dispatchEvent(userBatchDelete(userIndices));
+    dispatchEvent(robotBatchDelete(robotIndices));
+    dispatchEvent(parcelBatchDelete(parcelIndices));
   } catch (e) {
     dispatchEvent(companyFail(e));
   }

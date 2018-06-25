@@ -6,6 +6,7 @@ import {
   PARCEL_EDIT,
   PARCEL_SUCCESS,
   PARCEL_TOGGLE_EDIT,
+  PARCEL_BATCH_DELETE,
 } from 'constants/actionTypes';
 
 import { tokenClear } from './token';
@@ -23,6 +24,11 @@ const parcelFail = payload => ({ type: PARCEL_FAIL, payload });
 const parcelAdd = payload => ({ type: PARCEL_ADD, payload });
 const parcelEdit = payload => ({ type: PARCEL_EDIT, payload });
 const parcelDelete = payload => ({ type: PARCEL_DELETE, payload });
+
+export const parcelBatchDelete = payload => ({
+  type: PARCEL_BATCH_DELETE,
+  payload,
+});
 
 export const fetchAllParcels = () => async (dispatchEvent, getState) => {
   const { token } = getState();

@@ -6,6 +6,7 @@ import {
   ROBOT_ADD,
   ROBOT_EDIT,
   ROBOT_DELETE,
+  ROBOT_BATCH_DELETE,
 } from 'constants/actionTypes';
 import { LOADING, SUCCESS, ERROR } from 'constants/misc';
 
@@ -56,6 +57,13 @@ export default function robot(state = {}, { type, payload }) {
           ...state.value.slice(0, payload.index),
           ...state.value.slice(payload.index + 1),
         ],
+      });
+    case ROBOT_BATCH_DELETE:
+      return Object.assign({}, state, {
+        status: SUCCESS,
+        value: state.value.filter(
+          (v, i) => payload.findIndex(v => v === i) === -1,
+        ),
       });
     default:
       return state;
