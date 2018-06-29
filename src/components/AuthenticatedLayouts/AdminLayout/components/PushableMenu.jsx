@@ -51,7 +51,7 @@ export default class PushableMenu extends React.Component {
             </Menu.Item>
             <Menu.Item
               name="remote control"
-              onClick={() => this.props.goTo('/admin/remote_control')}
+              onClick={() => this.props.goTo('/admin/remote')}
             >
               <Icon name="laptop" />
               Robot Remote Control

@@ -39,8 +39,16 @@ export const deleteRobot = async ({ id }, token) =>
 
 export const getRobotToken = async ({ robotID, authToken }) =>
   await serviceTemplate(
-    fetch(`${BASE_URL}/robot/token/${robotID}`, {
+    fetch(`${SERVICE_URL}/token/${robotID}`, {
       method: 'GET',
       headers: { Authorization: authToken },
+    }),
+  );
+
+export const getOnlineRobots = async token =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}/online`, {
+      method: 'GET',
+      headers: { Authorization: token },
     }),
   );

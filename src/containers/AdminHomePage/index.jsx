@@ -34,7 +34,7 @@ export default class AdminHomePage extends React.Component {
               <Icon name="truck" />
               Robots Management
             </Button>
-            <Button basic color="grey" as={Link} to="/admin/remote_control">
+            <Button basic color="grey" as={Link} to="/admin/remote">
               <Icon name="laptop" />
               Robot Remote Control
             </Button>
