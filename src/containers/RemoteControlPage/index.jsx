@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid } from 'semantic-ui-react';
+import { Container, Grid, Message } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
@@ -18,6 +18,8 @@ const StyleWrapper = styled(Container)`
 class RemoteControlPage extends React.Component {
   state = {
     parcels: [],
+    loading: false,
+    error: '',
   };
 
   componentDidMount() {
@@ -29,9 +31,12 @@ class RemoteControlPage extends React.Component {
     // console.log(wscli);
 
     const robotID = this.props.match.params.id;
-    getParcelInsideRobot({ robotID }, this.props.token.value).then(
-      ({ parcels }) => this.setState({ parcels }),
-    );
+    this.setState({ loading: true });
+    getParcelInsideRobot({ robotID }, this.props.token.value)
+      .then(({ parcels }) => this.setState({ parcels, loading: false }))
+      .catch(({ message }) =>
+        this.setState({ loading: false, error: message }),
+      );
   }
 
   render() {
@@ -48,9 +53,15 @@ class RemoteControlPage extends React.Component {
           </Grid.Row>
           <Grid.Row columns={2}>
             <Grid.Column>
+              {this.state.error && (
+                <Message negative>
+                  <strong>Error!</strong> {this.state.error}
+                </Message>
+              )}
               <ParcelsList
                 parcels={this.state.parcels}
                 token={this.props.token.value}
+                loading={this.state.loading}
               />
             </Grid.Column>
           </Grid.Row>
