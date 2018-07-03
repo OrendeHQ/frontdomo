@@ -1,6 +1,8 @@
 import { storedToken } from 'lib/misc';
 
 export const BASE_URL = process.env.API_URL;
+export const WS_URL = process.env.WS_URL;
+export const MAP_API_URL = process.env.MAP_API_URL;
 export const NONE = 'NONE';
 export const LOADING = 'LOADING';
 export const SUCCESS = 'SUCCESS';

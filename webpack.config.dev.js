@@ -41,6 +41,10 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         API_URL: JSON.stringify('http://localhost:8080/api'),
+        WS_URL: JSON.stringify('ws://localhost:8080'),
+        MAP_API_URL: JSON.stringify(
+          'https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places',
+        ),
       },
     }),
   ],

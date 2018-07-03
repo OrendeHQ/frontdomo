@@ -32,7 +32,7 @@ export default class PushableMenu extends React.Component {
               name="parcel"
               onClick={() => this.props.goTo('/parcels')}
             >
-              <Icon name="archive" />
+              <Icon name="gift" />
               Parcel Management
             </Menu.Item>
           </Sidebar>

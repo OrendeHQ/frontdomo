@@ -23,7 +23,7 @@ export default class HomePage extends React.Component {
           </Grid.Row>
           <Grid.Row centered>
             <Button basic color="orange" as={Link} to="/parcels">
-              <Icon name="archive" />
+              <Icon name="gift" />
               Parcels Management
             </Button>
           </Grid.Row>

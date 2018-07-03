@@ -44,3 +44,20 @@ export const getParcelBarcode = async ({ id }, token) =>
       headers: { Authorization: token },
     }),
   );
+
+export const getParcelInsideRobot = async ({ robotID }, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}/robot/${robotID}`, {
+      method: 'GET',
+      headers: { Authorization: token },
+    }),
+  );
+
+export const sendSMSToCustomer = async ({ parcelID }, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}/sms`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: token },
+      body: JSON.stringify({ id: parcelID }),
+    }),
+  );

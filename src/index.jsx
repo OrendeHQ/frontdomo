@@ -18,6 +18,7 @@ import RobotsPage from 'containers/RobotsPage';
 import ChangePasswordPage from 'containers/ChangePasswordPage';
 import ParcelsPage from 'containers/ParcelsPage';
 import RemoteAccessPage from 'containers/RemoteAccessPage';
+import RemoteControlPage from 'containers/RemoteControlPage';
 
 const router = (
   <Provider store={store}>
@@ -48,6 +49,11 @@ const router = (
                     exact
                     path="/admin/remote"
                     component={RemoteAccessPage}
+                  />
+                  <Route
+                    exact
+                    path="/admin/control/:id"
+                    component={RemoteControlPage}
                   />
                   <Route exact path="/admin" component={AdminHomePage} />
                 </Switch>
