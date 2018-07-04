@@ -52,3 +52,11 @@ export const getOnlineRobots = async token =>
       headers: { Authorization: token },
     }),
   );
+
+export const getRobotLocation = async ({ robotID }, token) =>
+  await serviceTemplate(
+    fetch(`${SERVICE_URL}/gps/${robotID}`, {
+      method: 'GET',
+      headers: { Authorization: token },
+    }),
+  );

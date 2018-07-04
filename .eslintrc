@@ -30,5 +30,13 @@
     "WebSocket": true,
     "clearTimeout": true,
     "setTimeout": true
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/components/DodoMap/index.jsx"],
+      "globals": {
+        "google": true
+      }
+    }
+  ]
 }
