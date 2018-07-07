@@ -9,7 +9,8 @@
   "main": "index.jsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": " npm run clean && webpack-dev-server --config webpack.config.dev",
+    "start": "npm run clean && webpack-dev-server --config webpack.config.dev",
+    "start:remote": "npm run clean && webpack-dev-server --config webpack.config.remote",
     "build": "npm run clean && webpack --config webpack.config.prod",
     "clean": "rimraf dist/",
     "format": "prettier --config .prettierrc --write ./src/**/*.js{,x}",

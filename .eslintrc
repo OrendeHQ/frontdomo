@@ -29,7 +29,8 @@
     "require": true,
     "WebSocket": true,
     "clearTimeout": true,
-    "setTimeout": true
+    "setTimeout": true,
+    "navigator": true
   },
   "overrides": [
     {

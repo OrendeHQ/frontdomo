@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { WS_URL } from 'constants/misc';
 import JSMpeg from 'lib/JSMpeg';
 import DodoMap from 'components/DodoMap';
+import Wheelers from './components/Wheelers';
 import { getParcelInsideRobot } from 'lib/parcelService';
 import ParcelsList from './components/ParcelsList';
 import { getRobotLocation } from 'lib/robotService';
@@ -105,6 +106,9 @@ class RemoteControlPage extends React.Component {
                 token={this.props.token.value}
                 loading={this.state.loading}
               />
+            </Grid.Column>
+            <Grid.Column centered>
+              <Wheelers />
             </Grid.Column>
           </Grid.Row>
         </Grid>

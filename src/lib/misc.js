@@ -28,3 +28,5 @@ export function getAllIndices(arr, filterFunc) {
 
   return indices;
 }
+
+export const canGame = 'getGamepads' in navigator;
