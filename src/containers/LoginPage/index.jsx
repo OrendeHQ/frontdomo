@@ -1,11 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react';
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Image,
+  Segment,
+  Message,
+} from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import logo from 'assets/logo.svg';
 import { tokenLogin } from 'actions';
-import { LOADING } from 'constants/misc';
+import { LOADING, ERROR } from 'constants/misc';
 import { token as tokenPropTypes } from 'constants/propTypes';
 
 const StyleWrapper = styled.div`
@@ -81,6 +89,11 @@ class LoginPage extends React.Component {
                 </Button>
               </Segment>
             </Form>
+            {this.props.token.status === ERROR && (
+              <Message negative>
+                <strong>{this.props.token.error}!</strong> Please try again
+              </Message>
+            )}
           </Grid.Column>
         </Grid>
       </StyleWrapper>
