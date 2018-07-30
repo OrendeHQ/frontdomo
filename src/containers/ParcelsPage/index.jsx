@@ -145,8 +145,8 @@ class ParcelsPage extends React.Component {
         <Grid columns="equal">
           <Grid.Row centered>
             <Header as="h2" icon textAlign="center">
-              <Icon name="building" circular />
-              <Header.Content>Partners</Header.Content>
+              <Icon name="gift" circular />
+              <Header.Content>Parcels</Header.Content>
             </Header>
           </Grid.Row>
           {this.props.parcel.status === ERROR &&

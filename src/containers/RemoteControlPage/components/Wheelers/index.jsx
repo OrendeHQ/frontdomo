@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { canGame } from 'lib/misc';
+import PropTypes from 'prop-types';
 
+import { canGame } from 'lib/misc';
 import wheel from 'assets/wheel.svg';
 
 const StyleWrapper = styled.div`
@@ -17,6 +18,9 @@ export default class Wheelers extends React.Component {
   state = {
     angle: 0,
     connected: false,
+  };
+  static propsType = {
+    wscli: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
@@ -57,6 +61,18 @@ export default class Wheelers extends React.Component {
         if (newAngle !== this.state.angle) {
           this.setState({ angle: newAngle });
         }
+
+        let cmdStr = '';
+        if (gp.buttons[8].pressed && !gp.buttons[9].pressed) {
+          cmdStr += 'b';
+        } else if (!gp.buttons[8].pressed && gp.buttons[9].pressed) {
+          cmdStr += 'a';
+        } else {
+          cmdStr += 'o';
+        }
+
+        cmdStr += `(${Math.round(this.state.angle * 1000) / 1000})`;
+        this.props.websocket.send(cmdStr);
       }
     }, 100);
   };

@@ -37,8 +37,8 @@ class RemoteControlPage extends React.Component {
     const url = `${WS_URL}/user?token=${this.props.token.value}&robot_id=${
       this.props.match.params.id
     }`;
-    /*const player = */ new JSMpeg.Player(url, { canvas: this.canvas });
-    // const wscli = player.source.socket;
+    const player = new JSMpeg.Player(url, { canvas: this.canvas });
+    this.wscli = player.source.socket;
 
     const robotID = this.props.match.params.id;
     this.setState({ loading: true });
@@ -108,7 +108,7 @@ class RemoteControlPage extends React.Component {
               />
             </Grid.Column>
             <Grid.Column centered>
-              <Wheelers />
+              <Wheelers websocket={this.wscli} />
             </Grid.Column>
           </Grid.Row>
         </Grid>
