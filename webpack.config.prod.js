@@ -27,9 +27,18 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         API_URL: JSON.stringify('https://backdemo.herokuapp.com/api'),
+        WS_URL: JSON.stringify('wss://backdemo.herokuapp.com'),
+        MAP_API_URL: JSON.stringify(
+          'https://maps.googleapis.com/maps/api/js?key=AIzaSyBrgeMdt3-y8rUEJkLMLBDYvtFWTW2Q3FA&v=3.exp&libraries=geometry,drawing,places',
+        ),
       },
     }),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   module: {
     rules: [
       {
@@ -51,7 +60,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|eot|woff|woff2|ttf)$/,
         use: ['file-loader'],
       },
       {
