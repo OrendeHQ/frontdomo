@@ -56,16 +56,22 @@ export default class Wheelers extends React.Component {
   syncCommands = () => {
     this.syncInterval = setInterval(() => {
       const gp = navigator.getGamepads()[0];
-      if (gp.axes.length > 0) {
+      if (gp && gp.axes && gp.axes.length > 0) {
         const newAngle = 90 * gp.axes[0];
         if (newAngle !== this.state.angle) {
           this.setState({ angle: newAngle });
         }
 
         let cmdStr = '';
-        if (gp.buttons[8].pressed && !gp.buttons[9].pressed) {
+        const braking =
+          (gp.buttons[6].pressed && !gp.buttons[7].pressed) ||
+          (gp.buttons[8].pressed && !gp.buttons[9].pressed);
+        const accel =
+          (!gp.buttons[6].pressed && gp.buttons[7].pressed) ||
+          (!gp.buttons[8].pressed && gp.buttons[9].pressed);
+        if (braking) {
           cmdStr += 'b';
-        } else if (!gp.buttons[8].pressed && gp.buttons[9].pressed) {
+        } else if (accel) {
           cmdStr += 'a';
         } else {
           cmdStr += 'o';
